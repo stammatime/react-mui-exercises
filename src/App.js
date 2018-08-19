@@ -47,7 +47,8 @@ class App extends Component {
   handleExerciseSelect = id => {
     // same as: this.setState((prevState) => {
     this.setState(({ exercises }) => ({
-      exercise: exercises.find(ex => ex.id === id)
+      exercise: exercises.find(ex => ex.id === id),
+      editMode: false
     }));
   }
 
@@ -63,7 +64,9 @@ class App extends Component {
 
   handleExerciseDelete = id => {
     this.setState(({ exercises }) => ({
-      exercises: exercises.filter(ex => ex.id !== id)
+      exercises: exercises.filter(ex => ex.id !== id),
+      editMode: false,
+      exercise: {}
     }));
   }
 
@@ -75,11 +78,15 @@ class App extends Component {
 
     handleExerciseEdit = exercise => {
       //find all exercises that don't have the id of selected exercise, then update final
-      this.setState(({exercises}) => {
+
+      console.log(exercise) 
+      this.setState(({exercises}) => ({
         exercises: [
          ...exercises.filter(ex => ex.id !== exercise.id),
-         exercise]
-      })
+         exercise],
+         //used to change selected state as well
+         exercise
+      }))
     }
   
 

@@ -28,11 +28,16 @@ export default withStyles(styles)(class extends Component {
         });
     }
 
+
+    handleFormSubmit = exercise => {
+        this.handleToggle()
+        this.props.onCreate(exercise)
+    }
     
 
     render() {
         const { open } = this.state;
-        const { muscles, onCreate } = this.props;
+        const { muscles } = this.props;
 
         return (
             <Fragment>
@@ -42,9 +47,9 @@ export default withStyles(styles)(class extends Component {
                 <Dialog
                     open={this.state.open}
                     onClose={this.handleToggle}
-                    aria-labelledby="form-dialog-title"
+                    
                 >
-                    <DialogTitle id="form-dialog-title">
+                    <DialogTitle >
                         Create a new exercise.
                     </DialogTitle>
                     <DialogContent>
@@ -54,7 +59,7 @@ export default withStyles(styles)(class extends Component {
 
                         <Form
                             muscles={muscles}
-                            onSubmit={onCreate}
+                            onSubmit={this.handleFormSubmit}
                         />
 
                     </DialogContent>

@@ -27,11 +27,12 @@ export default ({
     category,
     onSelect,
     exercise: { id, title = "Welcome!", description = "Please select an exercise on the left list." },
+    exercise,
     onDelete,
     onSelectEdit,
     editMode,
-    onEdit,
-    exercise
+    onEdit
+    
 }) =>
     <Grid container>
         <Grid item sm>
