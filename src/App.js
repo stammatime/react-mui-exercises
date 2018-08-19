@@ -9,10 +9,20 @@ class App extends Component {
   state = {
     exercises,
     exercise: {},
-    category: ''
+    // category: ''
   }
 
   getExercisesByMuscles() {
+
+    // get all the cat titles so they are not deleted if all exercise of that type are deleted
+    const intitExercises = muscles.reduce((exercises, category) => ({
+      ...exercises,
+      [category]: []
+    }), {});
+
+    console.log(muscles, intitExercises);
+
+
     // Object.entries converts the objects to arrays (so we can iterate)
     return Object.entries(this.state.exercises.reduce((exercises, exercise) => {
       // pull off muscles attribute from exercise
@@ -21,10 +31,10 @@ class App extends Component {
       // console.log(exercises);
       // if muscle exists, add to muscle array. else create entry
       exercises[muscles] =
-        exercises[muscles] ? [...exercises[muscles], exercise] : [exercise];
+        exercises[muscles] =  [...exercises[muscles], exercise];
 
       return exercises;
-    }, {}));
+    }, intitExercises));
   }
 
   handleCategorySelect = category => {
@@ -36,20 +46,25 @@ class App extends Component {
 
   handleExerciseSelect = id => {
     // same as: this.setState((prevState) => {
-    this.setState(({exercises}) => ({
+    this.setState(({ exercises }) => ({
       exercise: exercises.find(ex => ex.id === id)
     }));
   }
 
   handleExerciseCreate = exercise => {
-    this.setState(({ exercises}) => ({
+    this.setState(({ exercises }) => ({
       exercises: [
         ...exercises,
         exercise
       ]
     })
-  
-  )
+    )
+  }
+
+  handleExerciseDelete = id => {
+    this.setState(({ exercises }) => ({
+      exercises: exercises.filter(ex => ex.id !== id)
+    }));
   }
 
   render() {
@@ -59,7 +74,7 @@ class App extends Component {
 
     return (
       <Fragment>
-        <Header 
+        <Header
           muscles={muscles}
           onExerciseCreate={this.handleExerciseCreate}
         ></Header>
@@ -68,6 +83,7 @@ class App extends Component {
           exercises={exercises}
           category={category}
           onSelect={this.handleExerciseSelect}
+          onDelete={this.handleExerciseDelete}
         ></Exercises>
         <Footer
           muscles={muscles}

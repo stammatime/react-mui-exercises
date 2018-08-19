@@ -5,6 +5,9 @@ import Typography from "@material-ui/core/Typography";
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import { ListItemSecondaryAction } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
+import Delete from "@material-ui/icons/Delete";
 
 const styles = {
     Paper: {
@@ -16,7 +19,13 @@ const styles = {
     }
 }
 
-export default ({ exercises, category, onSelect, exercise: {id ,title = "Welcome!", description = "Please select an exercise on the left list."} }) =>
+export default ({
+    exercises,
+    category,
+    onSelect,
+    exercise: { id, title = "Welcome!", description = "Please select an exercise on the left list."},
+    onDelete
+    }) =>
     <Grid container>
         <Grid item sm>
             <Paper style={styles.Paper}>
@@ -34,12 +43,15 @@ export default ({ exercises, category, onSelect, exercise: {id ,title = "Welcome
                                         // ({title}) takes title property off input
                                         // we could also pass (exercises) then do exercises.title
                                         <ListItem
-                                        onClick={() => onSelect(id)}
-                                        key={title} button component="a" href="#{exercise}">
+                                            onClick={() => onSelect(id)}
+                                            key={title} button component="a" href="#{exercise}">
                                             <ListItemText
-                                                primary={title}
-                                            
-                                                />
+                                                primary={title} />
+                                            <ListItemSecondaryAction>
+                                                <IconButton onClick={() => onDelete(id)}>
+                                                    <Delete />
+                                                </IconButton>
+                                            </ListItemSecondaryAction>
                                         </ListItem>
                                     )}
                                 </List>
