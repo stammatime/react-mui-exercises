@@ -8,6 +8,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { ListItemSecondaryAction } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import Delete from "@material-ui/icons/Delete";
+import Edit from "@material-ui/icons/Edit";
+import Form from "./form";
 
 const styles = {
     Paper: {
@@ -20,12 +22,17 @@ const styles = {
 }
 
 export default ({
+    muscles,
     exercises,
     category,
     onSelect,
-    exercise: { id, title = "Welcome!", description = "Please select an exercise on the left list."},
-    onDelete
-    }) =>
+    exercise: { id, title = "Welcome!", description = "Please select an exercise on the left list." },
+    onDelete,
+    onSelectEdit,
+    editMode,
+    onEdit,
+    exercise
+}) =>
     <Grid container>
         <Grid item sm>
             <Paper style={styles.Paper}>
@@ -48,6 +55,9 @@ export default ({
                                             <ListItemText
                                                 primary={title} />
                                             <ListItemSecondaryAction>
+                                                <IconButton onClick={() => onSelectEdit(id)}>
+                                                    <Edit />
+                                                </IconButton>
                                                 <IconButton onClick={() => onDelete(id)}>
                                                     <Delete />
                                                 </IconButton>
@@ -64,12 +74,22 @@ export default ({
         </Grid>
         <Grid item sm>
             <Paper style={styles.Paper}>
-                <Typography variant="display1">
-                    {title}
-                </Typography>
-                <Typography variant="subheading" style={{ marginTop: 20 }}>
-                    {description}
-                </Typography>
+                {editMode ?
+                    <Form
+                        muscles={muscles}
+                        onSubmit={onEdit}
+                        exercise={exercise}
+                    />
+                    : 
+                    <Fragment>
+                        <Typography variant="display1">
+                            {title}
+                        </Typography>
+                        <Typography variant="subheading" style={{ marginTop: 20 }}>
+                            {description}
+                        </Typography>
+                    </Fragment>}
+
             </Paper>
         </Grid>
     </Grid>

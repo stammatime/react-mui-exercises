@@ -1,6 +1,6 @@
 import React from 'react'
 import { AppBar, Toolbar, Typography } from '@material-ui/core'
-import CreateDialog from '../exercises/dialogs/create';
+import ExerciseDialog from '../exercises/dialog';
 
 
 export default ({muscles, onExerciseCreate}) =>
@@ -9,9 +9,9 @@ export default ({muscles, onExerciseCreate}) =>
       <Typography variant="headline" color="inherit" style={{flex: 1}}>
         Display 1
       </Typography>
-      <CreateDialog 
+      <ExerciseDialog 
         muscles={muscles}
         onCreate={onExerciseCreate}
-      ></CreateDialog>
+      ></ExerciseDialog>
     </Toolbar>
   </AppBar>

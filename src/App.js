@@ -67,10 +67,26 @@ class App extends Component {
     }));
   }
 
+  handleSelectEdit = id => 
+    this.setState({
+      exercise: exercises.find(ex => ex.id === id),
+      editMode: true
+    })
+
+    handleExerciseEdit = exercise => {
+      //find all exercises that don't have the id of selected exercise, then update final
+      this.setState(({exercises}) => {
+        exercises: [
+         ...exercises.filter(ex => ex.id !== exercise.id),
+         exercise]
+      })
+    }
+  
+
   render() {
     // console.log(this.getExercisesByMuscles())
     const exercises = this.getExercisesByMuscles(),
-      { category, exercise } = this.state;
+      { category, exercise, editMode } = this.state;
 
     return (
       <Fragment>
@@ -82,8 +98,13 @@ class App extends Component {
           exercise={exercise}
           exercises={exercises}
           category={category}
+          editMode={editMode}
           onSelect={this.handleExerciseSelect}
           onDelete={this.handleExerciseDelete}
+          onSelectEdit={this.handleSelectEdit}
+          muscles={muscles}
+          onEdit={this.handleExerciseEdit}
+          
         ></Exercises>
         <Footer
           muscles={muscles}
